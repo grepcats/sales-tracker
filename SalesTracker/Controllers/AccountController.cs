@@ -6,7 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using SalesTracker.Models;
 using SalesTracker.ViewModels;
 using Microsoft.AspNetCore.Identity;
-
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 
 namespace SalesTracker.Controllers
 {
@@ -21,6 +22,20 @@ namespace SalesTracker.Controllers
             _userManager = userManager;
             _signInManager = signInManager;
             _db = db;
+        }
+
+        public IActionResult Index()
+        {
+            var roles = _db.Roles.ToList();
+            return View(roles);
+        }
+
+        public IActionResult Delete(string RoleName)
+        {
+            var thisRole = _db.Roles.Where(r => r.Name.Equals(RoleName, StringComparison.CurrentCultureIgnoreCase)).FirstOrDefault();
+            _db.Roles.Remove(thisRole);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         public IActionResult Register()
@@ -52,7 +67,7 @@ namespace SalesTracker.Controllers
         public async Task<IActionResult> Login(LoginViewModel model)
         {
             Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: true, lockoutOnFailure: false);
-            if(result.Succeeded)
+            if (result.Succeeded)
             {
                 return RedirectToAction("Index", "Home");
             }
@@ -68,6 +83,32 @@ namespace SalesTracker.Controllers
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
         }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(FormCollection collection)
+        {
+            try
+            {
+                _db.Roles.Add(new IdentityRole()
+                {
+                    Name = collection["RoleName"]
+                });
+                _db.SaveChanges();
+                ViewBag.ResultMessage = "Role created successfully!";
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+
+        }
+
 
     }
 }
