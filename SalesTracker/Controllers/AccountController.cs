@@ -27,8 +27,8 @@ namespace SalesTracker.Controllers
 
         public IActionResult Index()
         {
-            var roles = _db.Roles.ToList();
-            return View(roles);
+            //var roles = _db.Roles.ToList();
+            return View();
         }
 
         public IActionResult Delete(string RoleName)
@@ -41,8 +41,7 @@ namespace SalesTracker.Controllers
 
         public IActionResult Register()
         {
-            SelectList list = new SelectList(_db.Roles.ToList());
-            ViewBag.Roles = list;
+            ViewBag.Roles = _db.Roles.ToList();
             return View();
         }
 
@@ -50,7 +49,9 @@ namespace SalesTracker.Controllers
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             var user = new ApplicationUser { UserName = model.Email };
+            user.Roles.Add(new IdentityUserRole<string> { RoleId = Request.Form["role"] });
             IdentityResult result = await _userManager.CreateAsync(user, model.Password);
+            _db.SaveChanges();
             if (result.Succeeded)
             {
                 return RedirectToAction("Index", "Home");

@@ -10,6 +10,15 @@
 @if (User.Identity.IsAuthenticated)
 {
     <p>Hello @User.Identity.Name!</p>
+    @if (User.IsInRole("Manager"))
+    {
+        <p>You are a manager and can do manager things</p>
+    }
+    else
+    {
+        <p>You are a sales person and can do sales person things</p>
+
+    }
 }
 else
 {

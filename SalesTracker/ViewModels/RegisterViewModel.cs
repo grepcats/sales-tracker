@@ -25,7 +25,7 @@ namespace SalesTracker.ViewModels
 
         [Required]
         [Display(Name = "User Role")]
-        public string UserRole { get; set; }
+        public string UserRoleId { get; set; }
 
     }
 }
