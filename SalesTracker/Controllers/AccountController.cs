@@ -8,6 +8,7 @@ using SalesTracker.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace SalesTracker.Controllers
 {
@@ -40,6 +41,8 @@ namespace SalesTracker.Controllers
 
         public IActionResult Register()
         {
+            SelectList list = new SelectList(_db.Roles.ToList());
+            ViewBag.Roles = list;
             return View();
         }
 
@@ -108,6 +111,8 @@ namespace SalesTracker.Controllers
             }
 
         }
+        
+
 
 
     }
