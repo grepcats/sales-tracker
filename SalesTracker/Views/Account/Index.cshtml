@@ -3,6 +3,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>CLick here 2 register</h2>
-<hr />
-<p>@Html.ActionLink("Register", "Register")</p>
+@using System.Security.Claims
+
+<h2>Hi, @User.Identity.Name.</h2>
