@@ -4,6 +4,8 @@
 @{
 }
 
+@using System.Security.Claims
+
 <br />
 <br />
 If you would like to create a new product, @Html.ActionLink("click here", "Create").
@@ -16,6 +18,11 @@ If you would like to create a new product, @Html.ActionLink("click here", "Creat
             <th>Inventory Total</th>
             <th>Wholesale Price</th>
             <th>Sale Price</th>
+            @if (User.IsInRole("Manager"))
+            {
+                <th>Delete</th>
+            }
+
         </tr>
 
         @foreach (var product in Model)
@@ -25,6 +32,11 @@ If you would like to create a new product, @Html.ActionLink("click here", "Creat
                 <td>@product.InventoryTotal</td>
                 <td>$@product.WholesalePrice</td>
                 <td>$@product.SalePrice</td>
+                @if (User.IsInRole("Manager"))
+                {
+                    <td>@Html.ActionLink("Balete", "Delete", new { id = product.ProductId })</td>
+                }
+
             </tr>
 
         }

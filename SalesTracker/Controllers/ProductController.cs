@@ -38,5 +38,22 @@ namespace SalesTracker.Controllers
             _db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+        [Authorize(Roles = "Manager")]
+        public IActionResult Delete(int id)
+        {
+            var thisProduct = _db.Products.FirstOrDefault(Products => Products.ProductId == id);
+            return View(thisProduct);
+        }
+
+        [Authorize(Roles = "Manager")]
+        [HttpPost, ActionName("Delete")]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            var thisProduct = _db.Products.FirstOrDefault(Products => Products.ProductId == id);
+            _db.Products.Remove(thisProduct);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
+        }
     }
 }
