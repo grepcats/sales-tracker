@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using SalesTracker.Models
+@model Product
+
+<br>
+<h2>Add a new item: </h2>
+<hr />
+@using (Html.BeginForm("Create", "Product", FormMethod.Post))
+{
+    <div class="container">
+        <div class="container">
+            @Html.LabelFor(product => product.Name)
+            @Html.TextBoxFor(product => product.Name)
+            <br />
+            @Html.LabelFor(product => product.InventoryTotal)
+            @Html.TextBoxFor(product => product.InventoryTotal)
+            <br />
+            @Html.LabelFor(product => product.WholesalePrice)
+            @Html.TextBoxFor(product => product.WholesalePrice)
+            <br />
+            @Html.LabelFor(product => product.SalePrice)
+            @Html.TextBoxFor(product => product.SalePrice)
+        </div>
+        <input type="submit" value="Create" class="btn" />
+    </div>
+
+}

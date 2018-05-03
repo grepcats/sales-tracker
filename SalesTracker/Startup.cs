@@ -9,6 +9,7 @@ using SalesTracker.Models;
 
 //Add this
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace SalesTracker
 {
@@ -43,8 +44,21 @@ namespace SalesTracker
             });
         }
 
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            loggerFactory.AddConsole(Configuration.GetSection("Logging"));
+            loggerFactory.AddDebug();
+
+            if (env.IsDevelopment())
+            {
+                app.UseBrowserLink();
+                app.UseDeveloperExceptionPage();
+            }
+            else
+            {
+                app.UseExceptionHandler("/Home/Error");
+            }
+
             app.UseStaticFiles();
 
             app.UseIdentity();
@@ -53,11 +67,7 @@ namespace SalesTracker
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}"); 
-            });
-            app.Run(async (context) =>
-            {
-                await context.Response.WriteAsync("Henlo Worl!");
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

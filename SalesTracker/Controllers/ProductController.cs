@@ -21,7 +21,22 @@ namespace SalesTracker.Controllers
 
         public IActionResult Index()
         {
+            var model = _db.Products.ToList();
+            return View(model);
+        }
+
+
+        public IActionResult Create()
+        {
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(Product product)
+        {
+            _db.Products.Add(product);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
         }
     }
 }
