@@ -12,20 +12,28 @@
 @using (Html.BeginForm("Create", "Product", FormMethod.Post))
 {
     <div class="container">
-        <div class="container">
-            @Html.LabelFor(product => product.Name)
+        <div class="container" style="font-size:2rem;">
+            Name
+            <br />
             @Html.TextBoxFor(product => product.Name)
             <br />
-            @Html.LabelFor(product => product.InventoryTotal)
+            <br />
+            Inventory Total
+            <br />
             @Html.TextBoxFor(product => product.InventoryTotal)
             <br />
-            @Html.LabelFor(product => product.WholesalePrice)
+            <br />
+            Wholesale Price
+            <br />
             @Html.TextBoxFor(product => product.WholesalePrice)
             <br />
-            @Html.LabelFor(product => product.SalePrice)
+            <br />
+            Sale Price
+            <br />
             @Html.TextBoxFor(product => product.SalePrice)
         </div>
-        <input type="submit" value="Create" class="btn" />
+        <hr />
+        <input type="submit" value="Create" style="text-align:center; font-size:3rem;"/>
     </div>
 
 }

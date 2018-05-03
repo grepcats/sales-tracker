@@ -4,5 +4,29 @@
 @{
 }
 
-<p> u suk</p>
-@Html.ActionLink("Create a new product", "Create")
+<br />
+<br />
+If you would like to create a new product, @Html.ActionLink("click here", "Create").
+<br />
+<br />
+<div class="container">
+    <table class="table">
+        <tr>
+            <th>Name</th>
+            <th>Inventory Total</th>
+            <th>Wholesale Price</th>
+            <th>Sale Price</th>
+        </tr>
+
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.Name</td>
+                <td>@product.InventoryTotal</td>
+                <td>$@product.WholesalePrice</td>
+                <td>$@product.SalePrice</td>
+            </tr>
+
+        }
+    </table>
+</div>
